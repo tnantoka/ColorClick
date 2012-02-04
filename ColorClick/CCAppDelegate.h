@@ -8,10 +8,15 @@
 
 #import <Cocoa/Cocoa.h>
 
+extern NSString * const CCColorFormatIndex; 
+
 @interface CCAppDelegate : NSObject <NSApplicationDelegate, NSTableViewDataSource, NSTableViewDelegate> {
     NSPoint lastPoint_;
     NSMutableArray *items_;
     NSInteger colorFormatIndex;
+    UInt8 currentRed_;
+    UInt8 currentGreen_;
+    UInt8 currentBlue_;
 }
 
 @property (assign) IBOutlet NSWindow *window;
@@ -21,6 +26,7 @@
 @property (assign) IBOutlet NSTableView *tableView;
 
 @property NSInteger colorFormatIndex;
+@property (assign) IBOutlet NSPopUpButton *popUp;
 
 - (IBAction)clearItems:(id)sender;
 - (IBAction)popupSelected:(id)sender;

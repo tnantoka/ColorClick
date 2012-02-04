@@ -8,6 +8,11 @@
 
 #import "CCAppDelegate.h"
 
+NSString * const CCColorFormatIndex = @"Color Format Index";
+
+#define kCCColorFormatIndexHex 0
+#define kCCColorFormatIndexDecimal 1
+
 @interface CCAppDelegate()
 - (void)globalMouseMoved:(NSEvent *)event;
 - (void)globalMouseDown:(NSEvent *)event;
@@ -15,12 +20,24 @@
 @end
 
 @implementation CCAppDelegate
+@synthesize popUp;
 
 @synthesize window = _window;
 @synthesize imageView;
 @synthesize colorLabel;
 @synthesize colorBox;
 @synthesize tableView;
+
++ (void)initialize {
+    NSLog(@"initialize");
+    
+    NSMutableDictionary *defaultValues = [NSMutableDictionary dictionary];
+    [defaultValues setObject:[NSNumber numberWithInt:kCCColorFormatIndexHex] forKey:CCColorFormatIndex];
+    
+    [[NSUserDefaults standardUserDefaults] registerDefaults:defaultValues];
+    
+    
+}
 
 - (void)dealloc
 {
@@ -44,9 +61,13 @@
     
     self.tableView.dataSource = self;
     self.tableView.target = self;
+    self.tableView.delegate = self;
     self.tableView.doubleAction = @selector(pasteToClipBoard);
     
     self.colorFormatIndex = 0;
+    
+    
+    [self.popUp selectItemAtIndex:[[NSUserDefaults standardUserDefaults] integerForKey:CCColorFormatIndex]];
     
 }
 
@@ -119,10 +140,25 @@
     UInt8 g = *(index + 1);
     UInt8 b = *(index + 0);
     //UInt8 a = *(index + 3);
-        
-    self.colorLabel.stringValue = [NSString stringWithFormat:@"rgb(%d, %d, %d)", r, g, b];
+
+    switch ([[NSUserDefaults standardUserDefaults] integerForKey:CCColorFormatIndex]) {
+        case kCCColorFormatIndexHex:
+            self.colorLabel.stringValue = [NSString stringWithFormat:@"#%x%x%x", r, g, b];
+            break;
+        case kCCColorFormatIndexDecimal:
+            self.colorLabel.stringValue = [NSString stringWithFormat:@"rgb(%d, %d, %d)", r, g, b];
+            break;            
+        default:
+            break;
+    }
+    
+    
     self.colorBox.fillColor = [NSColor colorWithDeviceRed:r/255.0 green:g/255.0 blue:b/255.0 alpha:1.0];
 
+    currentRed_ = r;
+    currentGreen_ = g;
+    currentBlue_ = b;
+    
 }
 
 - (void)globalMouseDown:(NSEvent *)event {
@@ -148,7 +184,20 @@
 */  
     
     NSLog(self.colorLabel.stringValue);
-    [items_ addObject:self.colorLabel.stringValue];
+    
+    NSString *hex = [NSString stringWithFormat:@"#%x%x%x", currentRed_, currentGreen_, currentBlue_];
+    NSString *decimal = [NSString stringWithFormat:@"rgb(%d, %d, %d)", currentRed_, currentGreen_, currentBlue_];
+
+    NSColor *color = [NSColor colorWithDeviceRed:currentRed_/255.0 green:currentGreen_/255.0 blue:currentBlue_/255.0 alpha:1.0];
+    
+//    NSMutableArray *item = [NSMutableArray array];
+//    [item insertObject:hex atIndex:kCCColorFormatIndexHex];
+//    [item insertObject:decimal atIndex:kCCColorFormatIndexDecimal];
+    NSArray *item = [NSArray arrayWithObjects:hex, decimal, color, nil];
+    
+    [items_ addObject:item];
+    
+//    [items_ addObject:self.colorLabel.stringValue];
     [self.tableView reloadData];
     
     
@@ -160,7 +209,34 @@
 
 - (id)tableView:(NSTableView *)tableView objectValueForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row {
     NSLog(@"row = %d", row);
-    return [items_ objectAtIndex:row];
+    
+    NSLog(@"colorIndex = %d", [[NSUserDefaults standardUserDefaults] integerForKey:CCColorFormatIndex]);
+//    return [items_ objectAtIndex:row];
+//    return [[items_ objectAtIndex:row] objectAtIndex:[[NSUserDefaults standardUserDefaults] integerForKey:CCColorFormatIndex]];
+
+    // default is null
+    NSLog(@"tableColumn = %@", [tableColumn identifier]);
+
+    switch ([tableColumn.identifier intValue]) {
+        case 0:
+            return @"";
+            break;
+            
+        case 1:
+            return [[items_ objectAtIndex:row] objectAtIndex:[[NSUserDefaults standardUserDefaults] integerForKey:CCColorFormatIndex]];
+            break;
+
+        default:
+            break;
+    }
+
+}
+
+- (void)tableView:(NSTableView *)tableView willDisplayCell:(id)cell forTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row {
+    if ([tableColumn.identifier isEqualToString:@"0"]) {
+        NSLog(@"class %@, color %@", [cell class], [[items_ objectAtIndex:row] lastObject]);
+        [cell setBackgroundColor:[[items_ objectAtIndex:row] lastObject]];
+    }
 }
 
 - (IBAction)clearItems:(id)sender {
@@ -171,13 +247,15 @@
 - (IBAction)popupSelected:(id)sender {
     sender = (NSPopUpButton *)sender;
     NSLog(@"popup! %d", [sender indexOfSelectedItem]);
+    [[NSUserDefaults standardUserDefaults] setInteger:[sender indexOfSelectedItem] forKey:CCColorFormatIndex];
+    [self.tableView reloadData];
 }
 
 - (void)pasteToClipBoard {
-    NSLog(@"clicked: %ld, %@", self.tableView.clickedRow, [items_ objectAtIndex:self.tableView.clickedRow]);
+    NSLog(@"clicked: %ld, %@", self.tableView.clickedRow, [[items_ objectAtIndex:self.tableView.clickedRow]  objectAtIndex:[[NSUserDefaults standardUserDefaults] integerForKey:CCColorFormatIndex]]);
     NSPasteboard *pb = [NSPasteboard generalPasteboard];
     [pb declareTypes:[NSArray arrayWithObject:NSStringPboardType] owner:self];
-    [pb setString:[items_ objectAtIndex:self.tableView.clickedRow] forType:NSStringPboardType];
+    [pb setString:[[items_ objectAtIndex:self.tableView.clickedRow]  objectAtIndex:[[NSUserDefaults standardUserDefaults] integerForKey:CCColorFormatIndex]] forType:NSStringPboardType];
 }
 
 - (void)setColorFormatIndex:(NSInteger)index {
