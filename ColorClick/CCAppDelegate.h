@@ -8,8 +8,21 @@
 
 #import <Cocoa/Cocoa.h>
 
-@interface CCAppDelegate : NSObject <NSApplicationDelegate>
+@interface CCAppDelegate : NSObject <NSApplicationDelegate, NSTableViewDataSource, NSTableViewDelegate> {
+    NSPoint lastPoint_;
+    NSMutableArray *items_;
+    NSInteger colorFormatIndex;
+}
 
 @property (assign) IBOutlet NSWindow *window;
+@property (assign) IBOutlet NSImageView *imageView;
+@property (assign) IBOutlet NSTextField *colorLabel;
+@property (assign) IBOutlet NSBox *colorBox;
+@property (assign) IBOutlet NSTableView *tableView;
+
+@property NSInteger colorFormatIndex;
+
+- (IBAction)clearItems:(id)sender;
+- (IBAction)popupSelected:(id)sender;
 
 @end

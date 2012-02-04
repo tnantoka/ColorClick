@@ -21,12 +21,12 @@
 		9BEE01E614D50C3B00E6AB32 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
 		9BEE01E714D50C3B00E6AB32 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		9BEE01E814D50C3B00E6AB32 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
-		9BEE01EB14D50C3B00E6AB32 /* ColorClick-Info.plist */ = {isa = PBXFileReference; path = "ColorClick-Info.plist"; sourceTree = "<group>"; };
+		9BEE01EB14D50C3B00E6AB32 /* ColorClick-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "ColorClick-Info.plist"; sourceTree = "<group>"; };
 		9BEE01ED14D50C3B00E6AB32 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		9BEE01EF14D50C3B00E6AB32 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		9BEE01F114D50C3B00E6AB32 /* ColorClick-Prefix.pch */ = {isa = PBXFileReference; path = "ColorClick-Prefix.pch"; sourceTree = "<group>"; };
+		9BEE01F114D50C3B00E6AB32 /* ColorClick-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ColorClick-Prefix.pch"; sourceTree = "<group>"; };
 		9BEE01F314D50C3B00E6AB32 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = en; path = en.lproj/Credits.rtf; sourceTree = "<group>"; };
-		9BEE01F514D50C3B00E6AB32 /* CCAppDelegate.h */ = {isa = PBXFileReference; path = CCAppDelegate.h; sourceTree = "<group>"; };
+		9BEE01F514D50C3B00E6AB32 /* CCAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CCAppDelegate.h; sourceTree = "<group>"; };
 		9BEE01F614D50C3B00E6AB32 /* CCAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CCAppDelegate.m; sourceTree = "<group>"; };
 		9BEE01F914D50C3B00E6AB32 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainMenu.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
