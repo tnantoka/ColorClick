@@ -60,8 +60,8 @@ NSString * const CCColorFormatIndex = @"Color Format Index";
     items_ = [[NSMutableArray array] retain];
     
     self.tableView.dataSource = self;
-    self.tableView.target = self;
     self.tableView.delegate = self;
+    self.tableView.target = self;
     self.tableView.doubleAction = @selector(pasteToClipBoard);
     
     self.colorFormatIndex = 0;
@@ -99,8 +99,9 @@ NSString * const CCColorFormatIndex = @"Color Format Index";
     CGPoint currentPoint = CGEventGetLocation(eventRef);
     CFRelease(eventRef);
     
-    int captureSize = 10;
-    CGRect captureRect = CGRectMake(currentPoint.x - (captureSize / 2), currentPoint.y - (captureSize / 2), captureSize, captureSize);
+    int captureSize = 11;
+    int center = floor(captureSize / 2.0);
+    CGRect captureRect = CGRectMake(currentPoint.x - center, currentPoint.y - center, captureSize, captureSize);
     CGImageRef cgImageRef = CGWindowListCreateImage(captureRect, kCGWindowListOptionOnScreenOnly, kCGNullWindowID, kCGWindowImageBoundsIgnoreFraming);
     
     NSBitmapImageRep *bitmap = [[NSBitmapImageRep alloc] initWithCGImage:cgImageRef];
@@ -130,17 +131,17 @@ NSString * const CCColorFormatIndex = @"Color Format Index";
     int bytes = 4;
     
     // Center
-    int x = captureSize / 2;
+    int x = center;
     int y = x;
 
-    UInt8 *index = buffer + ((x + (y * w)) * bytes);
+    UInt8 *index = buffer + x * bytes + y * bytesPerRow;
 
     // BGRA
     UInt8 r = *(index + 2);
     UInt8 g = *(index + 1);
     UInt8 b = *(index + 0);
     //UInt8 a = *(index + 3);
-
+    
     switch ([[NSUserDefaults standardUserDefaults] integerForKey:CCColorFormatIndex]) {
         case kCCColorFormatIndexHex:
             self.colorLabel.stringValue = [NSString stringWithFormat:@"#%x%x%x", r, g, b];
@@ -162,6 +163,12 @@ NSString * const CCColorFormatIndex = @"Color Format Index";
 }
 
 - (void)globalMouseDown:(NSEvent *)event {
+    
+    if ([self.window isKeyWindow]) {
+        return;
+    }
+
+        
 /*
 
 //    NSPoint currentPoint = [NSEvent mouseLocation];
@@ -193,9 +200,18 @@ NSString * const CCColorFormatIndex = @"Color Format Index";
 //    NSMutableArray *item = [NSMutableArray array];
 //    [item insertObject:hex atIndex:kCCColorFormatIndexHex];
 //    [item insertObject:decimal atIndex:kCCColorFormatIndexDecimal];
-    NSArray *item = [NSArray arrayWithObjects:hex, decimal, color, nil];
     
-    [items_ addObject:item];
+    if (items_.count == 0 || !([[[items_ objectAtIndex:0] lastObject] isEqualTo:color])) {
+        if (items_.count != 0) {
+            NSLog(@"color %@", color );
+            NSLog(@"items %@", [[items_ objectAtIndex:0] lastObject]);
+        }
+        NSArray *item = [NSArray arrayWithObjects:hex, decimal, color, nil];        
+        [items_ insertObject:item atIndex:0];
+    }
+    
+    
+//    [items_ addObject:item];
     
 //    [items_ addObject:self.colorLabel.stringValue];
     [self.tableView reloadData];
@@ -251,6 +267,14 @@ NSString * const CCColorFormatIndex = @"Color Format Index";
     [self.tableView reloadData];
 }
 
+- (IBAction)openAd:(id)sender {
+    NSLog(@"ad");
+    
+    NSURL *url = [NSURL URLWithString:@"http://looseleafjs.org/?utm_source=mac_app&utm_medium=banner&utm_campaign=color_click"];
+    // デフォルトブラウザで指定URLを開く
+    [[NSWorkspace sharedWorkspace] openURL:url];
+}
+
 - (void)pasteToClipBoard {
     NSLog(@"clicked: %ld, %@", self.tableView.clickedRow, [[items_ objectAtIndex:self.tableView.clickedRow]  objectAtIndex:[[NSUserDefaults standardUserDefaults] integerForKey:CCColorFormatIndex]]);
     NSPasteboard *pb = [NSPasteboard generalPasteboard];
@@ -267,5 +291,6 @@ NSString * const CCColorFormatIndex = @"Color Format Index";
     NSLog(@"get colorIndex");
     return colorFormatIndex;
 }
+
 
 @end

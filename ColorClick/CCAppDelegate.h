@@ -31,4 +31,6 @@ extern NSString * const CCColorFormatIndex;
 - (IBAction)clearItems:(id)sender;
 - (IBAction)popupSelected:(id)sender;
 
+- (IBAction)openAd:(id)sender;
+
 @end

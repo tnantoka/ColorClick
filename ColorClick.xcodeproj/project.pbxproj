@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9B62B45214DDF9E0000047D5 /* logo.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 9B62B45114DDF9E0000047D5 /* logo.jpg */; };
+		9B62B46314DE9D40000047D5 /* icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 9B62B46214DE9D40000047D5 /* icon.icns */; };
 		9BEE01E414D50C3B00E6AB32 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9BEE01E314D50C3B00E6AB32 /* Cocoa.framework */; };
 		9BEE01EE14D50C3B00E6AB32 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 9BEE01EC14D50C3B00E6AB32 /* InfoPlist.strings */; };
 		9BEE01F014D50C3B00E6AB32 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BEE01EF14D50C3B00E6AB32 /* main.m */; };
@@ -16,6 +18,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		9B62B45114DDF9E0000047D5 /* logo.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = logo.jpg; sourceTree = "<group>"; };
+		9B62B45614DE8DB4000047D5 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		9B62B46214DE9D40000047D5 /* icon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = icon.icns; sourceTree = "<group>"; };
 		9BEE01DF14D50C3B00E6AB32 /* ColorClick.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ColorClick.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9BEE01E314D50C3B00E6AB32 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		9BEE01E614D50C3B00E6AB32 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
@@ -46,6 +51,7 @@
 		9BEE01D414D50C3900E6AB32 = {
 			isa = PBXGroup;
 			children = (
+				9B62B46214DE9D40000047D5 /* icon.icns */,
 				9BEE01E914D50C3B00E6AB32 /* ColorClick */,
 				9BEE01E214D50C3B00E6AB32 /* Frameworks */,
 				9BEE01E014D50C3B00E6AB32 /* Products */,
@@ -93,6 +99,7 @@
 		9BEE01EA14D50C3B00E6AB32 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				9B62B45114DDF9E0000047D5 /* logo.jpg */,
 				9BEE01EB14D50C3B00E6AB32 /* ColorClick-Info.plist */,
 				9BEE01EC14D50C3B00E6AB32 /* InfoPlist.strings */,
 				9BEE01EF14D50C3B00E6AB32 /* main.m */,
@@ -136,6 +143,7 @@
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
+				ja,
 			);
 			mainGroup = 9BEE01D414D50C3900E6AB32;
 			productRefGroup = 9BEE01E014D50C3B00E6AB32 /* Products */;
@@ -155,6 +163,8 @@
 				9BEE01EE14D50C3B00E6AB32 /* InfoPlist.strings in Resources */,
 				9BEE01F414D50C3B00E6AB32 /* Credits.rtf in Resources */,
 				9BEE01FA14D50C3B00E6AB32 /* MainMenu.xib in Resources */,
+				9B62B45214DDF9E0000047D5 /* logo.jpg in Resources */,
+				9B62B46314DE9D40000047D5 /* icon.icns in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -177,6 +187,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				9BEE01ED14D50C3B00E6AB32 /* en */,
+				9B62B45614DE8DB4000047D5 /* ja */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
@@ -286,6 +297,7 @@
 				9BEE01FF14D50C3B00E6AB32 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
